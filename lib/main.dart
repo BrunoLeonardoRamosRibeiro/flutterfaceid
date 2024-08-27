@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,11 +34,27 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final ImagePicker picker = ImagePicker();
+
   File? image;
 
-  chooseImages() {}
+  chooseImages() async {
+    final XFile? _image = await picker.pickImage(source: ImageSource.gallery);
+    if (_image != null) {
+      setState(() {
+        image = File(_image.path);
+      });
+    }
+  }
 
-  captureImages() {}
+  captureImages() async {
+    final XFile? _image = await picker.pickImage(source: ImageSource.camera);
+    if (_image != null) {
+      setState(() {
+        image = File(_image.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
